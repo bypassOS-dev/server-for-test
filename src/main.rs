@@ -27,7 +27,10 @@ async fn main() -> std::io::Result<()>{
         tokio::spawn(async move {
 
             let mut tls_socket = match acceptor.accept(socket).await {
-                Ok(s) => s,
+                Ok(s) => {
+                    println!("We get new client!");
+                    s
+                },
                 Err(err) => {
                     println!("TLS handshake error from {}: {}", addr, err);
                     return;
@@ -43,7 +46,7 @@ async fn main() -> std::io::Result<()>{
                         return;
                     }
                     Ok(n) => {
-                        println!("We get new user!");
+                        println!("We get data!");
                         n
                     },
                     Err(err) => {
